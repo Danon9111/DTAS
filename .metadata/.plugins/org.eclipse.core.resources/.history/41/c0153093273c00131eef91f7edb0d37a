@@ -1,7 +1,6 @@
 import java.net.*;
 import java.rmi.*;
 import java.rmi.registry.*;
-import java.util.Scanner;
 public class HelloClient
 {
   public static void main(String args[])
@@ -15,13 +14,8 @@ public class HelloClient
       reg = LocateRegistry.getRegistry(serverAddr);
       // odszukanie zdalnego obiektu po jego nazwie
       remoteObject = (HelloInterface) reg.lookup("HelloServer");
-      
-      String message; //w nim zapiszemy swoje imie
-      Scanner odczyt = new Scanner(System.in); //obiekt do odebrania danych od użytkownika
- 
-      message = odczyt.nextLine();
       // wywołanie metody zdalnego obiektu
-      remoteObject.Hello(message);
+      remoteObject.Hello("Hello world!");
     }
     catch(RemoteException e)
     {
