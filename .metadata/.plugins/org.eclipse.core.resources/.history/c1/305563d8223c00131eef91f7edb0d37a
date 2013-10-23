@@ -1,0 +1,32 @@
+package dtas.czat;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class Client {
+	public static void main(String args[])
+	  {
+	    CzatInterface remoteObject;   // referencja do zdalnego obiektu
+	    Registry reg;                  // rejestr nazw obiektów
+	    String serverAddr=args[0];
+	    try
+	    {
+	      // pobranie referencji do rejestru nazw obiektów
+	      reg = LocateRegistry.getRegistry(serverAddr);
+	      // odszukanie zdalnego obiektu po jego nazwie
+	      remoteObject = (CzatInterface) reg.lookup("Server");
+	      // wywołanie metody zdalnego obiektu
+	      remoteObject.Hello("Hello world!");
+	    }
+	    catch(RemoteException e)
+	    {
+	      e.printStackTrace();
+	    }
+	    catch(NotBoundException e)
+	    {
+	      e.printStackTrace();
+	    }
+	  }
+}

@@ -1,0 +1,8 @@
+package dtas.czat;
+
+import java.rmi.*;
+
+public interface CzatInterface extends Remote
+{
+   void Hello(String message) throws RemoteException;
+}

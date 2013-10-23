@@ -1,0 +1,52 @@
+package dtas.czat;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class Server extends java.rmi.server.UnicastRemoteObject implements CzatInterface {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -944041699271368924L;
+	Registry reg;  // rejestr nazw obiektów 
+
+	  /**
+	   * Metoda, implementująca funkcję Hello() interfejsu HelloInterface, którą
+	   * zdalnie wywołuje klient
+	   */
+	  public void Message(String message) throws RemoteException
+	  {
+	    System.out.println(message);
+	  }
+
+	  public Server() throws RemoteException
+	  {
+	    try
+	    {
+	      // Utworzenie rejestru nazw
+	      reg = LocateRegistry.createRegistry(1099);
+	      // związanie z obiektem nazwy
+	      reg.rebind("HelloServer", this); 
+	    }
+	    catch(RemoteException e)
+	    {
+	      e.printStackTrace();
+	      throw e;
+	    }
+	  }
+	  
+	  public static void main(String args[])
+	  {
+	    // utworzenie obiektu dostępnego zdalnie
+	    try
+	    {
+	      Server s = new Server();
+	    } 
+	    catch (Exception e)
+	    {
+	       e.printStackTrace();
+	       System.exit(1);
+	    }
+	  }
+}
