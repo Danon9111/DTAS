@@ -1,17 +1,15 @@
-import java.net.*;
-import java.rmi.*;
-import java.rmi.server.*;
-import java.rmi.registry.*;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
  
-public class HelloServer extends java.rmi.server.UnicastRemoteObject
-                         implements HelloInterface 
+public class HelloServer extends java.rmi.server.UnicastRemoteObject implements HelloInterface
 {
-  Registry reg;  // rejestr nazw obiektów 
+  Registry reg; // rejestr nazw obiektów
 
   /**
-   * Metoda, implementująca funkcję Hello() interfejsu HelloInterface, którą
-   * zdalnie wywołuje klient
-   */
+* Metoda, implementująca funkcję Hello() interfejsu HelloInterface, którą
+* zdalnie wywołuje klient
+*/
   public void Hello(String message) throws RemoteException
   {
     System.out.println(message);
@@ -24,7 +22,7 @@ public class HelloServer extends java.rmi.server.UnicastRemoteObject
       // Utworzenie rejestru nazw
       reg = LocateRegistry.createRegistry(1099);
       // związanie z obiektem nazwy
-      reg.rebind("HelloServer", this); 
+      reg.rebind("HelloServer", this);
     }
     catch(RemoteException e)
     {
@@ -39,7 +37,7 @@ public class HelloServer extends java.rmi.server.UnicastRemoteObject
     try
     {
       HelloServer s = new HelloServer();
-    } 
+    }
     catch (Exception e)
     {
        e.printStackTrace();
