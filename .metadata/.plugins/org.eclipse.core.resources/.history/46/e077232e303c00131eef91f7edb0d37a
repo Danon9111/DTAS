@@ -1,0 +1,34 @@
+import java.net.*;
+import java.rmi.*;
+import java.rmi.registry.*;
+import java.util.Scanner;
+public class HelloClient
+{
+  public static void main(String args[])
+  {
+    HelloInterface remoteObject;   // referencja do zdalnego obiektu
+    Registry reg;                  // rejestr nazw obiektów
+    String serverAddr=args[0];
+    try
+    {
+      // pobranie referencji do rejestru nazw obiektów
+      reg = LocateRegistry.getRegistry(serverAddr);
+      // odszukanie zdalnego obiektu po jego nazwie
+      remoteObject = (HelloInterface) reg.lookup("HelloServer");
+      
+      String message;
+      Scanner odczyt = new Scanner(System.in); //obiekt do odebrania danych od użytkownika
+      message = odczyt.nextLine();
+      // wywołanie metody zdalnego obiektu
+      remoteObject.Hello(message);
+    }
+    catch(RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    catch(NotBoundException e)
+    {
+      e.printStackTrace();
+    }
+  }
+}

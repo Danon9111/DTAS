@@ -1,0 +1,44 @@
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Scanner;
+
+public class HelloClient 
+{
+	public static void main(String args[]) {
+		
+		String nick;
+		@SuppressWarnings("resource")
+		Scanner readNick = new Scanner(System.in);
+		nick = readNick.nextLine();
+	
+		// referencja do zdalnego obiektu
+		HelloInterface remoteObject;
+		// rejestr nazw obiektów
+		Registry reg;
+		String serverAddr=args[0];
+		try {
+			// pobranie referencji do rejestru nazw obiektów
+			reg = LocateRegistry.getRegistry(serverAddr);
+			// odszukanie zdalnego obiektu po jego nazwie
+			remoteObject = (HelloInterface) reg.lookup("");
+
+			String message;
+			//obiekt do odebrania danych od użytkownika
+			Scanner read = new Scanner(System.in); 
+			message = read.nextLine();
+			// wywołanie metody zdalnego obiektu
+			remoteObject.Hello(nick + ": " + message);
+			
+			HelloServer s = new HelloServer();
+			}
+		catch(RemoteException e) {
+			e.printStackTrace();
+		}
+		catch(NotBoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
