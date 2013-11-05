@@ -7,7 +7,7 @@ public class Implementations extends UnicastRemoteObject implements ChatInterfac
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; //it's need to don't see warnings from eclipse and this variable is used during deserialization and acts like hash
 	private Server cs;
  
     public Implementations(Server cs) throws RemoteException
